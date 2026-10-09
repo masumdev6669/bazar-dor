@@ -1,14 +1,16 @@
 import Image from "next/image";
 import heroImg from "@/assets/bazar-hero.png";
+import { getBanglaDate } from "@/lib/bn";
 
 export default function Hero() {
+  const today = getBanglaDate();
+
   return (
     <section className="max-w-6xl mx-auto px-4 mt-6 w-full">
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm px-6 py-8 md:px-10 md:py-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
-        {/* Left: text + CTA */}
         <div className="flex-1 text-center md:text-left">
           <span className="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full mb-4">
-            সর্বশেষ, ৯ আষাঢ়, ২০২৬
+            {today}
           </span>
 
           <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
@@ -28,7 +30,6 @@ export default function Hero() {
           </a>
         </div>
 
-        {/* Right: hero illustration */}
         <div className="shrink-0 w-56 md:w-72 lg:w-80">
           <Image
             src={heroImg}
