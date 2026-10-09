@@ -9,3 +9,18 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+
+/* Marquee animation — pure CSS, works in Tailwind v4 */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+  will-change: transform;
+}
