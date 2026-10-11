@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 বাজার দর (BazarDor)
 
-## Getting Started
+প্রয়োজনীয় পণ্যের দাম এক নজরে — চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম-দুধ ও মসলার আজকের বাজার দর।
 
-First, run the development server:
+চলতি বাজারদর, দামের পরিবর্তন, বাজারভিত্তিক বিশ্লেষণ — সব এক জায়গায়, বাংলায়।
+
+---
+
+## 🔧 Technologies Used
+
+| Technology                              | Purpose                               |
+| --------------------------------------- | ------------------------------------- |
+| **Next.js 16** (App Router + Turbopack) | Framework, routing, server components |
+| **TypeScript**                          | Type safety                           |
+| **Tailwind CSS v4**                     | Styling, responsiveness               |
+| **BetterAuth**                          | Email + Google + GitHub OAuth         |
+| **better-sqlite3**                      | Session / user storage                |
+| **react-hot-toast**                     | Toast notifications                   |
+| **Font Awesome**                        | Brand icons (Google, GitHub)          |
+| **Noto Sans Bengali**                   | Bangla typography                     |
+| **Vercel**                              | Deployment                            |
+
+---
+
+## ✨ Key Features
+
+1. **🔝 Navbar with live price ticker** — Bangla date + infinite scrolling marquee showing today's prices and change %
+2. **🎯 8 product categories** — চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম-দুধ, মসলা with active highlighting
+3. **📊 Three home sections** — top 6 risers (▲ আজ দাম বেড়েছে), top 6 fallers (▼ আজ দাম কমেছে), and all products
+4. **🔎 Product detail page** — market-by-market min/max/average prices with a full comparison table across 12 markets
+5. **🔐 Full authentication** — email/password + Google + GitHub OAuth, profile page, and update-name (Challenge C3)
+6. **🛡️ Protected routes** — middleware guards `/profile` and `/product/[slug]`; unauthenticated visitors are redirected to sign in
+7. **🌐 Bangla everywhere** — every price, count, and date rendered in Bangla numerals (৪৮ টাকা, ২.১%)
+8. **📱 Fully responsive** — mobile, tablet, and desktop, with skeleton loaders on every fetch
+
+---
+
+## 🚀 Getting Started
 
 ```bash
+# Clone the repo
+git clone https://github.com/masumdev6669/bazar-dor.git
+cd bazar-dor
+
+# Install dependencies
+npm install
+
+# Run dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
