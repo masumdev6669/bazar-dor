@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { getBanglaDate } from "@/lib/bn";
 import { useSession, signOut } from "@/lib/auth-client";
+import Image from "next/image";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -52,11 +53,21 @@ export default function Navbar() {
                   : "text-gray-700 hover:text-green-700"
               }`}
             >
-              <div className="w-8 h-8 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">
-                {(session.user.name ?? session.user.email ?? "?")
-                  .charAt(0)
-                  .toUpperCase()}
-              </div>
+              {session.user.image ? (
+                <Image
+                  src={session.user.image}
+                  alt={session.user.name ?? "avatar"}
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">
+                  {(session.user.name ?? session.user.email ?? "?")
+                    .charAt(0)
+                    .toUpperCase()}
+                </div>
+              )}
               <span className="hidden sm:inline">
                 {session.user.name ?? session.user.email}
               </span>
