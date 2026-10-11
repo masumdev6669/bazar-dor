@@ -5,24 +5,14 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { getBanglaDate } from "@/lib/bn";
-
-type SessionUser = { name?: string | null; email?: string | null };
+import { useSession, signOut } from "@/lib/auth-client";
 
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
+  const { data: session, isPending } = useSession();
 
-  const [user, setUser] = useState<SessionUser | null>(null);
-  const [loading, setLoading] = useState(true);
   const [today, setToday] = useState("");
-
-  useEffect(() => {
-    const t = setTimeout(() => {
-      setUser(null);
-      setLoading(false);
-    }, 300);
-    return () => clearTimeout(t);
-  }, []);
 
   useEffect(() => {
     setToday(getBanglaDate());
@@ -30,11 +20,12 @@ export default function Navbar() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleSignOut = () => {
-    setUser(null);
+  async function handleSignOut() {
+    await signOut();
     toast.success("সফলভাবে লগআউট হয়েছেন");
     router.push("/");
-  };
+    router.refresh();
+  }
 
   return (
     <nav className="sticky top-0 z-40 bg-white border-b border-gray-200">
@@ -49,19 +40,26 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {loading ? (
+        {isPending ? (
           <div className="h-9 w-40 bg-gray-200 rounded-md animate-pulse" />
-        ) : user ? (
+        ) : session?.user ? (
           <div className="flex items-center gap-3">
             <Link
               href="/profile"
-              className={`text-sm font-medium transition ${
+              className={`flex items-center gap-2 text-sm font-medium transition ${
                 pathname === "/profile"
                   ? "text-green-700"
                   : "text-gray-700 hover:text-green-700"
               }`}
             >
-              {user.name ?? user.email}
+              <div className="w-8 h-8 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">
+                {(session.user.name ?? session.user.email ?? "?")
+                  .charAt(0)
+                  .toUpperCase()}
+              </div>
+              <span className="hidden sm:inline">
+                {session.user.name ?? session.user.email}
+              </span>
             </Link>
             <button
               onClick={handleSignOut}

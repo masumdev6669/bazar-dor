@@ -34,7 +34,7 @@ export interface Category {
 }
 
 export async function getCategories(): Promise<Category[]> {
-  const res = await fetch(`${BASE}/categories`, { cache: "no-store" });
+  const res = await fetch(`${BASE}/categories`, { next: { revalidate: 300 } });
   if (!res.ok) throw new Error("Failed to load categories");
   return res.json();
 }
@@ -43,13 +43,15 @@ export async function getProducts(category?: string): Promise<Product[]> {
   const url = category
     ? `${BASE}/products?category=${encodeURIComponent(category)}`
     : `${BASE}/products`;
-  const res = await fetch(url, { cache: "no-store" });
+  const res = await fetch(url, { next: { revalidate: 300 } });
   if (!res.ok) throw new Error("Failed to load products");
   return res.json();
 }
 
 export async function getProduct(slug: string): Promise<Product | null> {
-  const res = await fetch(`${BASE}/products/${slug}`, { cache: "no-store" });
+  const res = await fetch(`${BASE}/products/${slug}`, {
+    next: { revalidate: 300 },
+  });
   if (!res.ok) return null;
   return res.json();
 }
