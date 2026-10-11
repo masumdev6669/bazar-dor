@@ -49,11 +49,22 @@ export async function getProducts(category?: string): Promise<Product[]> {
 }
 
 export async function getProduct(slug: string): Promise<Product | null> {
-  const res = await fetch(`${BASE}/products/${slug}`, {
-    next: { revalidate: 300 },
-  });
-  if (!res.ok) return null;
-  return res.json();
+  try {
+    const res = await fetch(`${BASE}/products`, {
+      next: { revalidate: 600 },
+    });
+    if (!res.ok) return null;
+
+    const list = (await res.json()) as Product[];
+
+    const found =
+      list.find((p) => p.slug === slug) ??
+      list.find((p) => String(p.id) === slug);
+
+    return found ?? null;
+  } catch {
+    return null;
+  }
 }
 
 export const topRisers = (products: Product[], n = 6) =>
